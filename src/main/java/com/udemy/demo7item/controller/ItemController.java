@@ -16,7 +16,7 @@ import com.udemy.demo7item.model.Item;
 import com.udemy.demo7item.service.ItemService;
 
 @RestController
-public class Itemcontroller {
+public class ItemController {
 	
 	@Autowired
 	private ItemService itemService;
