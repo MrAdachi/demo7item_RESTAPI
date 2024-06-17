@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import com.udemy.demo7item.model.HelloMessage;
 import com.udemy.demo7item.model.Item;
 import com.udemy.demo7item.repo.ItemRepository;
 
@@ -18,6 +21,12 @@ public class ItemService {
 	
 	@Autowired
 	private ItemRepository itemRepository;
+	
+	private RestTemplate restTemplate;
+	
+	public ItemService (RestTemplateBuilder restTemplateBuilder) {
+		this.restTemplate = restTemplateBuilder.build();
+	}
 	
 	/*
 	private List<Item> allItems = new ArrayList<> (Arrays.asList(
@@ -81,4 +90,12 @@ public class ItemService {
 	 public void deleteItem(Long itemId) {
 		 itemRepository.deleteById(itemId);
 	 }
+	
+	public HelloMessage getHelloResponse() {
+		String URL = "http://localhost:8081/hello";
+		String hello = restTemplate.getForObject(URL, String.class);
+		
+		HelloMessage retHello = new HelloMessage(hello);
+		return retHello;
+	}
 }
