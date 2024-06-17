@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.udemy.demo7item.model.Item;
@@ -26,27 +29,55 @@ public class ItemService {
 			));
 	*/
 	
+	@Cacheable("getItems")
 	 public List<Item> getAllItems(){
 		 List<Item> allItems = new ArrayList<>();
+		 
+		 // cacheを使用したか判別する（使用していない場合は3秒待機）
+		 try {
+			 Thread.sleep(3000);
+		 } catch(Exception e) {
+			 e.printStackTrace();
+		 }
+		
 		 itemRepository.findAll().forEach(allItems::add);
 		 
 		 return allItems;
 	 }
 	 
+	@Cacheable(value = "getItem", key = "#p0")
 	 public Optional<Item> getItem(Long itemId) {
+		
+		 // cacheを使用したか判別する（使用していない場合は3秒待機）
+		 try {
+			 Thread.sleep(3000);
+		 } catch(Exception e) {
+			 e.printStackTrace();
+		 }
+		
 		 return itemRepository.findById(itemId);
 	 }
 	 
+	@CacheEvict(value = "getItems", allEntries = true)
 	 public void addItem(Item item) {
 		 itemRepository.save(item);
 	 }
 	 
+	
+	@Caching(evict = {
+			@CacheEvict(value = "getItem", key = "#p0"),
+			@CacheEvict(value = "getItems", allEntries = true)
+	})
 	 public void updateItem(Long itemId, Item item) {
 		 if(itemRepository.findById(itemId).get() != null) {
 			 itemRepository.save(item);
 		 }
 	 }
 	 
+	@Caching(evict = {
+			@CacheEvict(value = "getItem", key = "#p0"),
+			@CacheEvict(value = "getItems", allEntries = true)
+	})
 	 public void deleteItem(Long itemId) {
 		 itemRepository.deleteById(itemId);
 	 }
