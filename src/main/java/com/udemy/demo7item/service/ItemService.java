@@ -28,7 +28,7 @@ public class ItemService {
 	
 	 public List<Item> getAllItems(){
 		 List<Item> allItems = new ArrayList<>();
-		 itemRepository.findAll().forEach(allItems::add);;
+		 itemRepository.findAll().forEach(allItems::add);
 		 
 		 return allItems;
 	 }
