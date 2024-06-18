@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 
 import com.udemy.demo7item.model.Item;
@@ -11,7 +13,13 @@ import com.udemy.demo7item.repo.ItemRepository;
 
 @SpringBootApplication
 @EnableCaching
-public class Demo7itemApplication implements CommandLineRunner{
+public class Demo7itemApplication extends SpringBootServletInitializer
+implements CommandLineRunner{
+	
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(Demo7itemApplication.class);
+	}
 	
 	@Autowired
 	private ItemRepository itemRepository;

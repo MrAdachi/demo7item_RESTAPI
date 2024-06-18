@@ -11,6 +11,7 @@
 	<groupId>com.udemy</groupId>
 	<artifactId>demo7item</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>demo7item</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -24,6 +25,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -42,6 +48,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>demo7item</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
